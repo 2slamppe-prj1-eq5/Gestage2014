@@ -4,27 +4,27 @@ function gotoUrl($url) {
 
 //fonction de choix de roles
 function choixRole() {
-//    $monDiv1 = document.getElementById('Formulaire_MaitreStage');
+    $monDiv1 = document.getElementById('Formulaire_MaitreStage');
     $monDiv = document.getElementById('Formulaire_Etudiant');
     $monSelect = document.getElementById('role');//récupération de la valeur du roles
     //formulaire qui sera modifier par la fonction
     $monDiv.style.visibility = 'hidden';
     $monDiv.style.height = "0";
-//    $monDiv1.style.visibility = 'hidden';
-//    $monDiv1.style.height = "0";
+    $monDiv1.style.visibility = 'hidden';
+    $monDiv1.style.height = "0";
 
     switch ($monSelect.value) { // 4 : Etudiant ; 5 : Maître de stage
         case "4" ://Etudiant
             $monDiv.style.visibility = 'visible';
             $monDiv.style.height = "100%";
-//            $monDiv1.style.visibility = 'hidden';
-//            $monDiv1.style.height = "0";
+            $monDiv1.style.visibility = 'visible';
+            $monDiv1.style.height = "0";
             break;
         case "5" : //MaitreDeStage
 //            $monDiv1.style.visibility = 'visible';
 //            $monDiv1.style.height = "100%";
-            $monDiv.style.visibility = 'hidden';
-            $monDiv.style.height = "0";
+//            $monDiv.style.visibility = 'hidden';
+//            $monDiv.style.height = "0";
             break;
         default://laisse les option caché pour tout autres utilisateur
             $monDiv.style.visibility = 'hidden';
