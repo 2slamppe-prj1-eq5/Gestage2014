@@ -1,4 +1,4 @@
-l<script language="JavaScript" type="text/javascript" src="../vues/javascript/fonctionsJavascript.inc.js"></script>
+<script language="JavaScript" type="text/javascript" src="../vues/javascript/fonctionsJavascript.inc.js"></script>
 <script language="JavaScript" type="text/javascript" src="../bibliotheques/jquery.js"></script>
 <script language="JavaScript" type="text/javascript" src=".../vues/javascript/ajax.inc.js"></script>
 
@@ -7,7 +7,7 @@ l<script language="JavaScript" type="text/javascript" src="../vues/javascript/fo
 
 <!-- $this->message : à afficher sous le formulaire -->
 <form method="post" action=".?controleur=AdminPersonnes&action=validationCreerPersonne" name="CreateUser">
-    <h1>Creation d'une personne Zblé</h1>
+    <h1>Creation d'une personne</h1>
     <!-- Choix du type de compte pour afficher les différentes informations pour créer un compte spécifique -->
     <fieldset>
 
