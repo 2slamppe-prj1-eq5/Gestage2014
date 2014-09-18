@@ -17,12 +17,12 @@ function choixRole() {
         case "4" ://Etudiant
             $monDiv.style.visibility = 'visible';
             $monDiv.style.height = "100%";
-            $monDiv1.style.visibility = 'visible';
-            $monDiv1.style.height = "0";
+//            $monDiv1.style.visibility = 'visible';
+//            $monDiv1.style.height = "0";
             break;
         case "5" : //MaitreDeStage
-//            $monDiv1.style.visibility = 'visible';
-//            $monDiv1.style.height = "100%";
+            $monDiv1.style.visibility = 'visible';
+            $monDiv1.style.height = "100%";
 //            $monDiv.style.visibility = 'hidden';
 //            $monDiv.style.height = "0";
             break;
