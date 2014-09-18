@@ -65,13 +65,12 @@
             <input type="text" name="formation" id="formation"></input><br/>
             <label for="option">Specialité :</label>
             <select name ="option" id="option">
-                <option value=""></option>
+                <option value=""> </option>
                 <?
 //création du contenu du select pour les spécialités des étudiants
                 foreach ($this->lireDonnee('lesSpecialites') as $spe) {
-                    echo'<option value="' . $spe->getId() . '">' . $spe->getLibelleCourt() . '</option>'; //echo de la ligne 
+                    echo'<option value="' . $spe->getId() . '">' . $spe->getLibellecCourt() . '</option>'; //echo de la ligne 
                 }
-               echo 'coucou';
                 ?>
             </select>
 
