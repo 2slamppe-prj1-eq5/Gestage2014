@@ -92,10 +92,10 @@
                 <option value=""></option>
 
                 <?php
-//                foreach ($this->lesEntreprise as $LesEntreprise) { // boucle d'affichage de toute les entreprise
-//                    // création d'une ligne du selecte 
-//                    echo'<option value="' . $LesEntreprise->IDORGANISATION . '">' . $LesEntreprise->NOM_ORGANISATION . '</option>';
-//                }
+                foreach ($this->lesEntreprise as $LesEntreprise) { // boucle d'affichage de toute les entreprise
+                    // création d'une ligne du selecte 
+                    echo'<option value="' . $LesEntreprise->IDORGANISATION . '">' . $LesEntreprise->NOM_ORGANISATION . '</option>';
+                }
                 ?>    
             </select> 
 
