@@ -3,15 +3,17 @@ function gotoUrl($url) {
 }
 
 //fonction de choix de roles
+
 function choixRole() {
-    $monDiv1 = document.getElementById('Formulaire_MaitreStage');
+
     $monDiv = document.getElementById('Formulaire_Etudiant');
+    $monDiv1 = document.getElementById('Formulaire_MaitreStage');
     $monSelect = document.getElementById('role');//récupération de la valeur du roles
     //formulaire qui sera modifier par la fonction
     $monDiv.style.visibility = 'hidden';
     $monDiv.style.height = "0";
-//    $monDiv1.style.visibility = 'hidden';
-//    $monDiv1.style.height = "0";
+    $monDiv1.style.visibility = 'hidden';
+    $monDiv1.style.height = "0";
 
     switch ($monSelect.value) { // 4 : Etudiant ; 5 : Maître de stage
         case "4" ://Etudiant

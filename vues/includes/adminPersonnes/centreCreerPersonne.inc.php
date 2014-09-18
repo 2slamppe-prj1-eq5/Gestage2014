@@ -16,7 +16,7 @@
         <label for="role">R&ocirc;le :</label>
         <select OnChange="javascript:choixRole();"  name="role" id="role"><!-- le OnChange éxécute la fonction qui affichera ou non le formulaire etudiant -->
             <option value=""></option>
-
+            bitches brooooooooooooooooooooooo
             <?php
             // remplissage du "SELECT" qui contien les roles
             foreach ($this->lireDonnee('lesRoles') as $role) {
