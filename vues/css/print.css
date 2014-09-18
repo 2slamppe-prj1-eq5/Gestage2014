@@ -10,9 +10,9 @@
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
-@page{
+/*@page{
     margin:10%;
-}
+}*/
 u1#gauche{
     margin:0;
     border:none;

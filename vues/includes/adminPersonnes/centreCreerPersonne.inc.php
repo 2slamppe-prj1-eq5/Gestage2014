@@ -64,7 +64,7 @@
             <input type="text" name="formation" id="formation"></input><br/>
             <label for="option">Specialité :</label>
             <select name ="option" id="option">
-                <option value=""></option>
+                <option value=""> </option>
                 <?
 //création du contenu du select pour les spécialités des étudiants
                 foreach ($this->lireDonnee('lesSpecialites') as $spe) {
