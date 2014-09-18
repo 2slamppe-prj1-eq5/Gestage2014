@@ -71,6 +71,7 @@
                 foreach ($this->lireDonnee('lesSpecialites') as $spe) {
                     echo'<option value="' . $spe->getId() . '">' . $spe->getLibelleCourt() . '</option>'; //echo de la ligne 
                 }
+               echo 'coucou';
                 ?>
             </select>
 
