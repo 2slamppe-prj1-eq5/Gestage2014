@@ -20,7 +20,7 @@ function choixRole() {
 //            $monDiv1.style.visibility = 'visible';
 //            $monDiv1.style.height = "0";
             break;
-        case "MaitreDeStage" : //MaitreDeStage
+        case "5" : //MaitreDeStage
             $monDiv1.style.visibility = 'visible';
             $monDiv1.style.height = "100%";
 //            $monDiv.style.visibility = 'hidden';
