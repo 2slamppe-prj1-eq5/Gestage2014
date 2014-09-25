@@ -59,7 +59,7 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         $formation = $_POST['formation'];
         $specialite = $_POST['option'];
         $login = $_POST['login'];
-        $mdp = $_POST['mdp'];
+        $mdp = sha1($_POST['mdp']);
         
         
         $unePersonne = new M_Personne(null, $specialite, $role, $civilite, $nom, $prenom, $numTel, $mail, $mobile, $etudes, $formation, $login, $mdp);
