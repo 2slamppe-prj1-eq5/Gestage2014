@@ -10,14 +10,14 @@ function choixRole() {
     //formulaire qui sera modifier par la fonction
     $monDiv.style.visibility = 'hidden';
     $monDiv.style.height = "0";
-//    $monDiv1.style.visibility = 'hidden';
-//    $monDiv1.style.height = "0";
+    $monDiv1.style.visibility = 'hidden';
+    $monDiv1.style.height = "0";
 
     switch ($monSelect.value) { // 4 : Etudiant ; 5 : Maître de stage
         case "4" ://Etudiant
             $monDiv.style.visibility = 'visible';
             $monDiv.style.height = "100%";
-//            $monDiv1.style.visibility = 'hidden';
+//            $monDiv1.style.visibility = 'visible';
 //            $monDiv1.style.height = "0";
             break;
         case "5" : //MaitreDeStage

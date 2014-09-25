@@ -16,7 +16,6 @@
         <label for="role">R&ocirc;le :</label>
         <select OnChange="javascript:choixRole();"  name="role" id="role"><!-- le OnChange éxécute la fonction qui affichera ou non le formulaire etudiant -->
             <option value=""></option>
-
             <?php
             // remplissage du "SELECT" qui contien les roles
             foreach ($this->lireDonnee('lesRoles') as $role) {
@@ -37,7 +36,7 @@
         <label for="civilite">Civilit&eacute; :</label>
 
         <select type="select" name="civilite" id="civilite">
-            <option>Madame</option>
+            <option>Madame zbz</option>
             <option>Monsieur</option>
         </select>
         <label for="nom">Nom :</label>
@@ -93,10 +92,10 @@
                 <option value=""></option>
 
                 <?php
-//                foreach ($this->lesEntreprise as $LesEntreprise) { // boucle d'affichage de toute les entreprise
-//                    // création d'une ligne du selecte 
-//                    echo'<option value="' . $LesEntreprise->IDORGANISATION . '">' . $LesEntreprise->NOM_ORGANISATION . '</option>';
-//                }
+                foreach ($this->lesEntreprise as $LesEntreprise) { // boucle d'affichage de toute les entreprise
+                    // création d'une ligne du selecte 
+                    echo'<option value="' . $LesEntreprise->IDORGANISATION . '">' . $LesEntreprise->NOM_ORGANISATION . '</option>';
+                }
                 ?>    
             </select> 
 
