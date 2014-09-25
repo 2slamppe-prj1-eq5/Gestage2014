@@ -22,6 +22,12 @@
         $lesRoles = $dao->getAll();
         var_dump($lesRoles);
 
+        // role : test de la selection par l'id d'un seul role
+        echo "<p><u>Role : test select one </u></p>";
+        $unRole = $dao->selectOne(4);
+        var_dump($unRole);
+        
+        
         $dao = new M_DaoSpecialite();
         $dao->connecter();
 
