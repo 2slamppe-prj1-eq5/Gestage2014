@@ -40,6 +40,10 @@
         echo "<p>Specialite : test de sélection de tous les enregistrements</p>";
         $lesSpes = $dao->getAll();
         var_dump($lesSpes);
+        
+        echo '<p>Specilite : teste select one</p>';
+        $selection = $dao->selectOne(1);
+        var_dump($selection);
 
         $dao->deconnecter();
         ?>

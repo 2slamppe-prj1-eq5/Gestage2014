@@ -57,10 +57,18 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         $mobile = $_POST['telP'];
         $etudes = $_POST['etudes'];
         $formation = $_POST['formation'];
-        $specialite = $_POST['option'];
+        
         $login = $_POST['login'];
         $mdp = sha1($_POST['mdp']);
         
+        $specialite = new M_Specialite(null, null, null);
+        
+        $idSpecialite = $_POST['option'];
+        
+        $daoSpecialite = new M_DaoSpecialite();
+        $daoSpecialite->connecter();
+        $pdo = $daoSpecialite->getPdo();
+        $specialite=$daoSpecialite->selectOne($idSpecialite);
         
         $unePersonne = new M_Personne(null, $specialite, $role, $civilite, $nom, $prenom, $numTel, $mail, $mobile, $etudes, $formation, $login, $mdp);
         
@@ -68,6 +76,7 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         $daoPers = new M_DaoPersonne();
         $daoPers->connecter();
         $pdo = $daoPers->getPdo();
+        var_dump($unePersonne);
         $daoPers->insert($unePersonne);
         
     }

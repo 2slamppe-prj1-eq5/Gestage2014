@@ -37,12 +37,31 @@ class M_DaoSpecialite extends M_DaoGenerique {
 
     public function insert($objetMetier) {
         return FALSE;
-    }
+    }    
 
     public function update($idMetier, $objetMetier) {
         return FALSE;
     }
 
+
+    public function selectOne($idSpecialite) {
+        $retour = null;
+        try{
+            //requete
+            $sql = "SELECT * FROM $this->nomTable WHERE idspecialite=".$idSpecialite;
+            //préparer la requête PDO
+            $queryPrepare = $this->pdo->prepare($sql);
+            //execution de la  requete
+            if($queryPrepare->execute(array(':id'=> $idSpecialite))) {
+                // si la requete marche
+                $enregistrement = $queryPrepare->fetch(PDO::FETCH_ASSOC);
+                $retour = $this->enregistrementVersObjet($enregistrement);
+            }
+            
+        } catch (Exception $e) {
+            echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();
+        }
+        return $retour;
+    }
+    
 }
-
-

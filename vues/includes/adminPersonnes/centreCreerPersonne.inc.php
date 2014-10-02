@@ -36,7 +36,7 @@
         <label for="civilite">Civilit&eacute; :</label>
 
         <select type="select" name="civilite" id="civilite">
-            <option>Madame zbz</option>
+            <option>Madame</option>
             <option>Monsieur</option>
         </select>
         <label for="nom">Nom :</label>
