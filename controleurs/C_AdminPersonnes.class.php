@@ -82,6 +82,10 @@ class C_AdminPersonnes extends C_ControleurGenerique {
             
         }
         
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+            
+        
+        
         $this->vue->afficher();
     }
 

@@ -1,5 +1,7 @@
 <?php
 // récupération de tous les champs saisies
+    
+
     $civilite = $_POST['civilite'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
