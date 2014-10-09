@@ -158,3 +158,12 @@ fieldset{
     
 }
 
+.affichageCreationPersonne{
+    margin : auto;
+    width: 480px;
+    
+}
+.affichageCreationPersonne input{
+    width: 350px;
+    text-align:center;
+}

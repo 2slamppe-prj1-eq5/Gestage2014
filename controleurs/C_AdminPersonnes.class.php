@@ -34,21 +34,18 @@ class C_AdminPersonnes extends C_ControleurGenerique {
 
     //validation de création d'utilisateur 
     function validationcreerPersonne() {
-        $this->vue = new V_Vue("../vues/templates/tmplate.inc.php");
-        $this->vue->ecrireDonnee('titreVue', "Creation d'une personne");
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Validation de la création d'une personne");
 
-        //var_dump($_POST);
-
-        $idRole = $_POST['role'];
-        
-        $role = new M_Role(null, null, null);
-                
+        //récupération de l'objet role
+        $idRole = $_POST['role'];        
+        $role = new M_Role(null, null, null);                
         $daoRole = new M_DaoRole();
         $daoRole->connecter();
         $pdo = $daoRole->getPdo();
         $role=$daoRole->selectOne($idRole);
         
-        
+        //récupération de tous les champs saisie
         $civilite = $_POST['civilite'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
@@ -56,29 +53,36 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         $numTel = $_POST['tel'];
         $mobile = $_POST['telP'];
         $etudes = $_POST['etudes'];
-        $formation = $_POST['formation'];
-        
+        $formation = $_POST['formation'];        
         $login = $_POST['login'];
         $mdp = sha1($_POST['mdp']);
         
-        $specialite = new M_Specialite(null, null, null);
-        
-        $idSpecialite = $_POST['option'];
-        
+        //récupération de l'objet spécialité
+        $specialite = new M_Specialite(null, null, null);        
+        $idSpecialite = $_POST['option'];        
         $daoSpecialite = new M_DaoSpecialite();
         $daoSpecialite->connecter();
         $pdo = $daoSpecialite->getPdo();
         $specialite=$daoSpecialite->selectOne($idSpecialite);
         
+        //création de la personne saisie par l'utilisateur
         $unePersonne = new M_Personne(null, $specialite, $role, $civilite, $nom, $prenom, $numTel, $mail, $mobile, $etudes, $formation, $login, $mdp);
         
-        
+        //insertion de la personne crée dans la base de données
         $daoPers = new M_DaoPersonne();
         $daoPers->connecter();
         $pdo = $daoPers->getPdo();
-        var_dump($unePersonne);
         $daoPers->insert($unePersonne);
         
+        //si l'insertion a réussis, revois sur la page d'affichage sinon, renvoi un message d'erreur
+        if($daoPers) {
+            $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.php");
+        }else{
+            $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.php");
+            
+        }
+        
+        $this->vue->afficher();
     }
 
 }

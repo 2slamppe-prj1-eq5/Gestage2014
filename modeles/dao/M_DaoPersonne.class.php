@@ -185,7 +185,7 @@ class M_DaoPersonne extends M_DaoGenerique {
             $sql .= "VALUES (";
             $sql .= ":specialite, :civilite, :idRole, :nom, :prenom, :numTel, :mail, :mobile, ";
             $sql .= ":etudes, :formation, :login, :mdp)";
-            var_dump($sql);
+            //var_dump($sql);
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier

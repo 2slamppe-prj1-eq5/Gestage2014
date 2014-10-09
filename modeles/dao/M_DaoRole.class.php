@@ -43,6 +43,7 @@ class M_DaoRole extends M_DaoGenerique {
         return FALSE;
     }
     
+    //selection de tous les champs a partir de l'id
     public function selectOne($idRole) {
         $retour = null;
         try{
