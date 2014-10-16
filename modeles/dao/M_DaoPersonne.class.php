@@ -231,6 +231,20 @@ class M_DaoPersonne extends M_DaoGenerique {
         }
         return $retour;
     }
+    
+    function rechercheMail($mail){
+        $retour = null;
+        try {
+            $sql = "SELECT * FROM $this->nomTable WHERE mail='".$mail."'";
+            $stmt = $this->pdo->prepare($sql);
+            if ($stmt->execute(array(':login' => $login, ':mdp' => sha1($mdp)))) {
+                $retour = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();
+        }
+        return $retour;
+    }
 
 }
 

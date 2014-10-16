@@ -7,6 +7,12 @@
 
 <!-- $this->message : à afficher sous le formulaire -->
 <form method="post" action=".?controleur=AdminPersonnes&action=validationCreerPersonne" name="CreateUser">
+    
+    <?php 
+        if(!is_null($this->lireDonnee('message'))) {
+            echo '<strong>'.$this->lireDonnee('message').'</script>';
+        }
+    ?>
     <h1>Creation d'une personne</h1>
     <!-- Choix du type de compte pour afficher les différentes informations pour créer un compte spécifique -->
     <fieldset>
@@ -119,7 +125,8 @@
 
     </fieldset>
     <fieldset>
-        <input type="submit" value="Creer" onclick="return valider()"></input><!-- OnClick éxécutera le JS qui testera tout les champ du formulaire. -->
+        <!--<input type="submit" value="Creer" onclick="return valider()"></input><!-- OnClick éxécutera le JS qui testera tout les champ du formulaire. -->
+        <input type="submit" value="Creer" ></input>
         <input type="button" value="Retour" onclick="history.go(-1)">
     </fieldset>
 </form>

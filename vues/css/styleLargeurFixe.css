@@ -167,3 +167,7 @@ fieldset{
     width: 350px;
     text-align:center;
 }
+
+.affichageCreationPersonne label {
+    width:105px;
+}
