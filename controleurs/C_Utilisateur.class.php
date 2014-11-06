@@ -72,6 +72,22 @@ class C_Utilisateur extends C_ControleurGenerique {
         }
         $this->vue->afficher();
     }
+    
+    function ajoutStage(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', 'Ajouter un stage');
+        // charger les coordonnées de l'utilisateur connecté depuis la BDD       
+        $daoPers = new M_DaoPersonne();
+        $daoPers->connecter();
+        $utilisateur = $daoPers->getOneByLogin(MaSession::get('login'));
+        $daoPers->deconnecter();
+        $this->vue->ecrireDonnee('utilisateur', $utilisateur);
+        // transmettre le login        
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get('login'));
+
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreAjouterStage.inc.php");
+        $this->vue->afficher();
+    }
 
 }
 
