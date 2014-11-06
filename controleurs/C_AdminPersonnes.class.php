@@ -57,26 +57,29 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         $mdp2 = sha1($_POST['mdp2']);
         $idSpecialite = $_POST['option'];
         
+        
+        
         if(stripos($mail, '@') !== FALSE && (stripos($mail, '.fr') !== FALSE OR stripos($mail, '.com') !== FALSE)) {
             $daoPersonne = new M_DaoPersonne();
             $daoPersonne->connecter();
-            $ok = $daoPersonne->rechercheMail($mail);
+            $ok = $daoPersonne->rechercheMail($mail);            
         }else{
-            $ok = false;
+            $ok = true;
         }
 
+        
         if ($idRole != ""
                 && $idSpecialite != ""
                 && $civilite != "" 
                 && $nom != "" 
                 && $prenom != "" 
-                && is_nan($numTel) && $numTel != "" 
-                && is_nan($mobile) 
-                && $etude != "" 
+                && !is_nan($numTel) && $numTel != "" 
+                && !is_nan($mobile) 
+                && $etudes != "" 
                 && $formation != "" 
                 && $login != "" 
-                && $mdp != "" && $mdp2 != "" && $mdp = $mdp2
-                && $ok
+                && $mdp != "" && $mdp2 != "" && $mdp == $mdp2
+                && !$ok
         ) {
 
             $role = new M_Role(null, null, null);
@@ -116,7 +119,7 @@ class C_AdminPersonnes extends C_ControleurGenerique {
             
             $this->vue->afficher();
         } else {
-            $message = 'insertion impossible, veillez réessayer';
+            $message = 'insertion impossible, veillez recommencer';
             $this->creerPersonne($message);
         }
         
