@@ -59,7 +59,7 @@
 
     <!-- Information nécessaire uniquement aux étudiants -->
 
-    <div id="Formulaire_Etudiant" style="visibility:hidden" height="0">
+    <div id="Formulaire_Etudiant" style="display:none" height="0">
         <fieldset>
             <legend>Informations specifiques aux étudiant</legend>
 
@@ -89,7 +89,7 @@
 
     <!-- Information nécessaire uniquement aux maitre de stage -->
 
-    <div id="Formulaire_MaitreStage" style="visibility:hidden" height="0">
+    <div id="Formulaire_MaitreStage" style="display:none" height="0">
         <fieldset>
             <legend>Choisir l'entreprise :</legend>
 

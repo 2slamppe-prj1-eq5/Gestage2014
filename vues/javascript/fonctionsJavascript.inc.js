@@ -8,29 +8,25 @@ function choixRole() {
     $monDiv = document.getElementById('Formulaire_Etudiant');
     $monSelect = document.getElementById('role');//récupération de la valeur du roles
     //formulaire qui sera modifier par la fonction
-    $monDiv.style.visibility = 'hidden';
+    $monDiv.style.display = 'none';
     $monDiv.style.height = "0";
-    $monDiv1.style.visibility = 'hidden';
+    $monDiv1.style.display = 'none';
     $monDiv1.style.height = "0";
 
     switch ($monSelect.value) { // 4 : Etudiant ; 5 : Maître de stage
         case "4" ://Etudiant
-            $monDiv.style.visibility = 'visible';
-            $monDiv.style.height = "100%";
-//            $monDiv1.style.visibility = 'visible';
-//            $monDiv1.style.height = "0";
+            $monDiv.style.display = 'block';
+            $monDiv.style.height = "135px";
+//            $monDiv1.style.display = 'none';
             break;
         case "5" : //MaitreDeStage
-//         $monDiv1.style.visibility = 'visible';
-//         $monDiv1.style.height = "100%";
-            $monDiv.style.visibility = 'hidden';
-            $monDiv.style.height = "0";
+//            $monDiv1.style.display = 'block';
+//            $monDiv1.style.height = "100%";
+            $monDiv.style.display = 'none';
             break;
         default://laisse les option caché pour tout autres utilisateur
-            $monDiv.style.visibility = 'hidden';
-            $monDiv.style.height = "0";
-//            $monDiv1.style.visibility = 'hidden';
-//            $monDiv1.style.height = "0";
+            $monDiv.style.display = 'none';
+//            $monDiv1.style.display = 'none';
     }
 }
 
