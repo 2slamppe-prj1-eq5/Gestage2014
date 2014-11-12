@@ -59,7 +59,7 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         
         
         
-        if(stripos($mail, '@') !== FALSE && (stripos($mail, '.fr') !== FALSE OR stripos($mail, '.com') !== FALSE)) {
+        if(stripos($mail, '@') !== FALSE && ((stripos($mail, '.fr') !== FALSE || stripos($mail, '.com') !== FALSE))) {
             $daoPersonne = new M_DaoPersonne();
             $daoPersonne->connecter();
             $ok = $daoPersonne->rechercheMail($mail);            

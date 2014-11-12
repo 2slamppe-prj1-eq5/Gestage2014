@@ -158,16 +158,16 @@ fieldset{
     
 }
 
-.affichageCreationPersonne{
+.affichageCreation{
     margin : auto;
     width: 480px;
     
 }
-.affichageCreationPersonne input{
+.affichageCreation input{
     width: 350px;
     text-align:center;
 }
 
-.affichageCreationPersonne label {
+.affichageCreation label {
     width:105px;
 }

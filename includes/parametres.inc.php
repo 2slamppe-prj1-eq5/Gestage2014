@@ -1,7 +1,7 @@
 <?php
 
 // Version
-define('VERSION_APPLICATION', 'juin 2014 - initiale');
+define('VERSION_APPLICATION', 'novembre 2014 - Stage');
 
 // Accès base de données
 define('DSN', 'mysql:host=localhost;dbname=gestage');

@@ -4,126 +4,176 @@
 
 
 <!-- VARIABLES NECESSAIRES -->
+<?php $unUtilisateur = $this->lireDonnee('utilisateur'); ?>
 
 <!-- $this->message : à afficher sous le formulaire -->
-<form method="post" action=".?controleur=AdminPersonnes&action=validationCreerPersonne" name="CreateUser">
+<form method="post" action=".?controleur=utilisateur&action=validerAjoutStage">
     <h1>Ajouter un Stage</h1>
     <!-- Choix du type de compte pour afficher les différentes informations pour créer un compte spécifique -->
-    
-    <!-- Données valables pour tous les rôles -->
     <fieldset>
+        
         <legend>Les informations g&eacute;n&eacute;rales</legend>
-        <label for="annee">Ann&eacutee scolaire :</label>
-
-        <select type="select" name="annee" id="annee">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }?>
+        
+        
+        <!-- Année Scolaire -->
+        <label>Ann&eacutee scolaire :</label>
+        <select id="annee" name="annee" OnChange="ajoutScol()">
+            <option></option>
+            <?php
+                foreach ($this->lireDonnee('anneescol') as $AnneeScol) {
+                    echo'<option value="' . $AnneeScol->getAnneeScol() . '">' . $AnneeScol->getAnneeScol() . '</option>';
+                }
+            ?>
+            <option value="insertAnnee">Ajouter une Année ...</option>
         </select>
-        <label for="eleve">&Eacute;l&egrave;ve :</label>
-
-        <select type="select" name="civilite" id="civilite">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
+        <!-- div pour ajouté une année si elle n'est pas recensé -->
+        <div id='ajoutAnnee'></div>
+        
+        
+        <!-- Organisation -->
+        <label>Organisation :</label>
+        <select id="orga" name="orga" onChange="ajoutOrga()">
+            <option></option>
+            <?php foreach ($this->lireDonnee('organisation') as $Organisation) {
+                echo'<option value="' . $Organisation->getIdOrganisation() . '">' . $Organisation->getNomOrganisation() . '</option>';
             }?>
-        </select>
-        <label for="civilite">Ann&eacutee scolaire :</label>
-
-        <select type="select" name="civilite" id="civilite">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }?>
-        </select>
-        <label for="civilite">Ann&eacutee scolaire :</label>
-
-        <select type="select" name="civilite" id="civilite">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }?>
-        </select>
-        <label for="civilite">Ann&eacutee scolaire :</label>
-
-        <select type="select" name="civilite" id="civilite">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }?>
-        </select>
-        <label for="civilite">Ann&eacutee scolaire :</label>
-
-        <select type="select" name="civilite" id="civilite">
-            <?php foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }?>
+            <option value="insertOrga">Ajouter une Organisation ...</option>
         </select>
         
+        <!-- Ville ou se situera le stage -->
+        <label>Ville :</label>
+        <select onChange="ajoutVille()" name="ville" id="ville">
+            <option></option>
+            <?php foreach ($this->lireDonnee('organisation') as $Organisation) {
+                echo'<option value="' . $Organisation->getVilleOrganisation() . '">' . $Organisation->getVilleOrganisation() . '</option>';
+            }?>
+            <option value="insertVille">Ajouter une Ville ...</option>
+        </select>
+        <!-- div pour ajouté une ville si elle n'est pas recensé -->
+        <div id='ajoutVille'></div>
+        
+        <!-- Date de stage -->
+        <label>Date de Début :</label>
+        <input type="date" name="dateD">
+        <label>Date de Fin :</label>
+        <input type="date" name="dateF">
+        <label>Date de Visite :</label>
+        <input type="date" name="dateV">
     </fieldset>
-
-    <!-- Information nécessaire uniquement aux étudiants -->
-
-    <div id="Formulaire_Etudiant" style="display:none" height="0">
-        <fieldset>
-            <legend>Informations specifiques aux étudiant</legend>
-
-
-            <label for="etudes">Etudes :</label>
-            <input type="text" name="etudes" id="etudes"></input><br/>
-            <label for="formation">Formation :</label>
-            <input type="text" name="formation" id="formation"></input><br/>
-            <label for="option">Specialité :</label>
-            <select name ="option" id="option">
-                <option value=""> </option>
-                <?
-//création du contenu du select pour les spécialités des étudiants
-                foreach ($this->lireDonnee('lesSpecialites') as $spe) {
-                    echo'<option value="' . $spe->getId() . '">' . $spe->getLibellecCourt() . '</option>'; //echo de la ligne 
-                }
-                ?>
-            </select>
-
-        </fieldset>
-
-    </div>
-
-
-
-
-
-    <!-- Information nécessaire uniquement aux maitre de stage -->
-
-    <div id="Formulaire_MaitreStage" style="display:none" height="0">
-        <fieldset>
-            <legend>Choisir l'entreprise :</legend>
-
-            <label for="login">Entreprise :</label>
-            <select type ="select" name="entreprise1" id="entreprise1"><!--selecte de choix d'entreprise-->
-                <option value=""></option>
-
-                <?php
-                foreach ($this->lesEntreprise as $LesEntreprise) { // boucle d'affichage de toute les entreprise
-                    // création d'une ligne du selecte 
-                    echo'<option value="' . $LesEntreprise->IDORGANISATION . '">' . $LesEntreprise->NOM_ORGANISATION . '</option>';
-                }
-                ?>    
-            </select> 
-
-        </fieldset>
-
-    </div>
-
-
-
-
-
-    <!-- Donnée de conection des utilisateur -->
     <fieldset>
-        <legend>Ses identifiants de connexion</legend>
-        <label for="login">Login :</label>
-        <input type="text" name="login" id="login"></input><br/>
-        <label for="mdp">Mot de passe :</label>
-        <input type="password" name="mdp" id="mdp"></input><br/>
-        <label for="mdp2">Retaper le mot de passe :</label>  <!-- vérification de mots de passe -->
-        <input type="password" name="mdp2" id="mdp2"></input><br/>
-
+        <legend>Personne</legend>
+        <?php if($unUtilisateur->getRole()->getId()=="4"){ ?>
+            <fieldset style="width: 397;">
+                <legend>&Eacute;l&egrave;ve</legend>
+                <label>Nom :</label>
+                <input type="text" name="eleveNom" value="<?php echo $unUtilisateur->getNom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
+                <label>Prénom :</label>
+                <input type="text" name="elevePrenom" value="<?php echo $unUtilisateur->getPrenom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Professeur</legend>
+                <label>Nom :</label>
+                <input type="text" name="profNom">
+                <label>Prénom :</label>
+                <input type="text" name="profPrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Maître de stage</legend>
+                <label>Nom :</label>
+                <input type="text" name="stageNom">
+                <label>Prénom :</label>
+                <input type="text" name="stagePrenom">
+            </fieldset>
+        <?php } elseif($unUtilisateur->getRole()->getId()=="3"){ ?>
+            <fieldset style="width: 397;">
+                <legend>&Eacute;l&egrave;ve</legend>
+                <label>Nom :</label>
+                <input type="text" name="eleveNom">
+                <label>Prénom :</label>
+                <input type="text" name="elevePrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Professeur</legend>
+                <label>Nom :</label>
+                <input type="text" name="profNom" value="<?php echo $unUtilisateur->getNom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                <label>Prénom :</label>
+                <input type="text" name="profPrenom" value="<?php echo $unUtilisateur->getPrenom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Maître de stage</legend>
+                <label>Nom :</label>
+                <input type="text" name="stageNom">
+                <label>Prénom :</label>
+                <input type="text" name="stagePrenom">
+            </fieldset>
+        <?php } elseif($unUtilisateur->getRole()->getId()=="5"){ ?>
+            <fieldset style="width: 397;">
+                <legend>&Eacute;l&egrave;ve</legend>
+                <label>Nom :</label>
+                <input type="text" name="eleveNom">
+                <label>Prénom :</label>
+                <input type="text" name="elevePrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Professeur</legend>
+                <label>Nom :</label>
+                <input type="text" name="profNom">
+                <label>Prénom :</label>
+                <input type="text" name="profPrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Maître de stage</legend>
+                <label>Nom :</label>
+                <input type="text" name="stageNom" value="<?php echo $unUtilisateur->getNom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                <label>Prénom :</label>
+                <input type="text" name="stagePrenom" value="<?php echo $unUtilisateur->getPrenom();?>" readonly
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+            </fieldset>
+        <?php } else { ?>
+            <fieldset style="width: 397;">
+                <legend>&Eacute;l&egrave;ve</legend>
+                <label>Nom :</label>
+                <input type="text" name="eleveNom">
+                <label>Prénom :</label>
+                <input type="text" name="elevePrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Professeur</legend>
+                <label>Nom :</label>
+                <input type="text" name="profNom">
+                <label>Prénom :</label>
+                <input type="text" name="profPrenom">
+            </fieldset>
+            <fieldset style="width: 397;">
+                <legend>Maître de stage</legend>
+                <label>Nom :</label>
+                <input type="text" name="stageNom">
+                <label>Prénom :</label>
+                <input type="text" name="stagePrenom">
+            </fieldset>
+        <?php } ?>
+    </fieldset>
+    <fieldset>
+        <legend>Supplément</legend>
+        <label>Divers :</label>
+        <input type="text" name="divers" id="divers"></input>
+        <label>Bilan des travaux :</label>
+        <input type="text" name="bilanTravaux" id="bilanTravaux"></input>
+        <label>Ressources des Outils :</label>
+        <input type="text" name="RessourcesOutils" id="RessourcesOutils"></input>
+        <label>Commantaire :</label>
+        <textarea style="margin: 0px; height: 19px; width: 172px;" type="text" name="Commantaire" id="Commantaire"></textarea>
+        <label>Participation CCF :</label>
+        <select type="select" name="ParticipationCCF" id="ParticipationCCF">
+            <option></option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select>
     </fieldset>
     <fieldset>
         <input type="submit" value="Creer" onclick="return valider()"></input><!-- OnClick éxécutera le JS qui testera tout les champ du formulaire. -->
@@ -136,3 +186,31 @@ if (isset($this->message)) {
     echo "<strong>" . $this->message . "</strong>";
 }
 ?>
+
+<script type='text/javascript'>
+    function ajoutScol() {
+        if(document.getElementById("annee").value === "insertAnnee"){
+            b = document.getElementById("ajoutAnnee");
+            b.innerHTML = '<input type="text" name="ajoutAnnee" style="width:144px; margin-left: 4px;">';
+        } else{
+            b = document.getElementById("ajoutAnnee");
+            b.innerHTML = '';
+        }
+    }
+    
+    function ajoutOrga() {
+        if(document.getElementById("orga").value === "insertOrga"){
+            alert("Vous allez être redirigé vers la page de création d'un organisation");
+        }
+    }
+    
+    function ajoutVille() {
+        if(document.getElementById("ville").value === "insertVille"){
+            b = document.getElementById("ajoutVille");
+            b.innerHTML = '<input type="text" name="ajoutVille" style="width:144px; margin-left: 4px;">';
+        } else{
+            b = document.getElementById("ajoutVille");
+            b.innerHTML = '';
+        }
+    }
+</script>

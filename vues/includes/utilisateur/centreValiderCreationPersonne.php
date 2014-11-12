@@ -30,7 +30,7 @@
 ?>
 
 <!-- Affichage des champs correpondant à la personne crée -->
-<div class="affichageCreationPersonne" >
+<div class="affichageCreation" >
 <label for="tel">Role :</label>
 <input type="text" name="telP" id="telP" value="<?php echo $role->getLibelle() ;?>" readonly></input><br/>
 <label for="civilite">Civilite : </label>
