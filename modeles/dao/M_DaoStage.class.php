@@ -111,5 +111,3 @@ class M_DaoStage extends M_DaoGenerique {
     }
 
 }
-
-
