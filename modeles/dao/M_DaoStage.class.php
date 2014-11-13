@@ -27,12 +27,19 @@ class M_DaoStage extends M_DaoGenerique {
     public function objetVersEnregistrement($objetMetier) {
         // construire un tableau des paramètres d'insertion ou de modification
         // l'ordre des valeurs est important : il correspond à celui des paramètres de la requête SQL
+        
+        $idEtudiant = $objetMetier->getIdEtudiant();
+        $idProf = $objetMetier->getIdProfesseur();
+        $idOrg = $objetMetier->getIdOrganisation();
+        $idMaitreStage =  $objetMetier->getIdMaitreStage();
+        
+        
         $retour = array(
             ':anneescol' => $objetMetier->getAnneeScol(),
-            ':idetudiant' => $objetMetier->getIdEtudiant(),
-            ':idprofesseur' => $objetMetier->getIdProfesseur(),
-            ':idorganisation' => $objetMetier->getIdOrganisation(),
-            ':idmaitrestage' => $objetMetier->getIdMaitreStage(),
+            ':idetudiant' => $idEtudiant,
+            ':idprofesseur' => $idProf,
+            ':idorganisation' => $idOrg,
+            ':idmaitrestage' => $idMaitreStage,
             ':datedebut' => $objetMetier->getDateDebut(),
             ':datefin'  => $objetMetier->getDateFin(),
             ':datevisitestage' => $objetMetier->getDateVisiteStage(),
@@ -51,19 +58,21 @@ class M_DaoStage extends M_DaoGenerique {
         try {
             // Requête textuelle paramétrée (paramètres nommés)
             $sql = "INSERT INTO $this->nomTable (ANNEESCOL,IDETUDIANT,IDPROFESSEUR,IDORGANISATION,
-                                                 IDMAITREDESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANT,RESSOURCEOUTILS
-                                                 COMMENTAIRES,PARTICIPATIONCCF";
+                                                 IDMAITRESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANTRAVAUX,RESSOURCESOUTILS,
+                                                 COMMENTAIRES,PARTICIPATIONCCF) ";
                     
             $sql .=  "VALUES (:anneescol,:idetudiant, :idprofesseur, :idorganisation,
-                     :idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers, :ressourceoutils, :commentaires, :participationccf)";
+                     :idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers, :bilantravaux :ressourceoutils, :commentaires, :participationccf)";
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier
             $parametres = $this->objetVersEnregistrement($objetMetier);
-            //var_dump($sql);
+            var_dump($sql);
             //var_dump($parametres);
             // exécuter la requête avec les valeurs des paramètres dans un tableau
-            l$retour = $queryPrepare->execute($parametres);
+            
+            $retour = $queryPrepare->execute($parametres);
+            
 //            debug_query($sql, $parametres);
         } catch (PDOException $e) {
             echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();

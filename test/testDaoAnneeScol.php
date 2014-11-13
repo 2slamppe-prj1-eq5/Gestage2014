@@ -22,7 +22,9 @@
         $AnneeScol = new M_AnneeScol("2015-2016");
         $dao->insert($AnneeScol);
         $anneeScol = $dao->getOneByAnnee("2015-2016");
-        var_dump($anneeScol);/*
+        var_dump($anneeScol);
+        
+        /*
 
         //Test de modification
         echo "<p>Test de modification</p>";
