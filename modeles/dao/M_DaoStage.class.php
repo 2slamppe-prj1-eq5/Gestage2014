@@ -27,9 +27,14 @@ class M_DaoStage extends M_DaoGenerique {
     public function objetVersEnregistrement($objetMetier) {
         // construire un tableau des paramètres d'insertion ou de modification
         // l'ordre des valeurs est important : il correspond à celui des paramètres de la requête SQL
+        if (!is_null($objetMetier->getIdEtudiant())) {
+            $idEtudiant = $objetMetier->getRole()->getId();
+        } else {
+            $idRole = 0; // "Autre" (simple visiteur)
+        }
         $retour = array(
             ':anneescol' => $objetMetier->getAnneeScol(),
-            ':idetudiant' => $objetMetier->getIdEtudiant(),
+            ':idetudiant' => $objetMetier,
             ':idprofesseur' => $objetMetier->getIdProfesseur(),
             ':idorganisation' => $objetMetier->getIdOrganisation(),
             ':idmaitrestage' => $objetMetier->getIdMaitreStage(),
@@ -63,7 +68,7 @@ class M_DaoStage extends M_DaoGenerique {
             //var_dump($sql);
             //var_dump($parametres);
             // exécuter la requête avec les valeurs des paramètres dans un tableau
-            l$retour = $queryPrepare->execute($parametres);
+            $retour = $queryPrepare->execute($parametres);
 //            debug_query($sql, $parametres);
         } catch (PDOException $e) {
             echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();

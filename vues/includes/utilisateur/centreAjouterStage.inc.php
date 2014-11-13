@@ -98,10 +98,10 @@
                 <legend>Professeur</legend>
                 <label>Nom :</label>
                 <input type="text" name="profNom" value="<?php echo $unUtilisateur->getNom();?>" readonly
-                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
                 <label>Prénom :</label>
                 <input type="text" name="profPrenom" value="<?php echo $unUtilisateur->getPrenom();?>" readonly
-                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
             </fieldset>
             <fieldset style="width: 397;">
                 <legend>Maître de stage</legend>
@@ -129,10 +129,10 @@
                 <legend>Maître de stage</legend>
                 <label>Nom :</label>
                 <input type="text" name="stageNom" value="<?php echo $unUtilisateur->getNom();?>" readonly
-                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
                 <label>Prénom :</label>
                 <input type="text" name="stagePrenom" value="<?php echo $unUtilisateur->getPrenom();?>" readonly
-                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">>
+                       style="color: rgb(84, 84, 84); background-color: rgb(235, 235, 228);">
             </fieldset>
         <?php } else { ?>
             <fieldset style="width: 397;">
