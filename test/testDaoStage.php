@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>test DaoPersonne</title>
+        <title>test DaoAnneeScol</title>
     </head>
     <body>
         <?php
@@ -11,11 +11,39 @@
 
         $dao = new M_DaoStage();
         $dao->connecter();
+
+        //Test de sélection de tous les enregistrements
+        echo "<p>Test de sélection de tous les enregistrements</p>";
+        $lesStages = $dao->getAll();
+        var_dump($lesStages);
+
+        //Test d'insertion
+        echo "<p>Test d'insertion</p>";
+        $Stage = new M_Stage(28, '2013-2014', '25', '2', '1', '3', '2014-05-26', '2014-06-27', '2014-06-20', 'Nantes', 'divers', 'bilan', 'ressource', 'commantaire', 'Oui');
+        $dao->insert($Stage);
+        $StageAjoute = $dao->getOneById(26);
+        var_dump($StageAjoute);
         
-        echo "<p>Test  </p>";
-        
-        
-        var_dump();
+        die();
+
+        //Test de modification
+        echo "<p>Test de modification</p>";
+       $role->setMail("victor.hugo@laposte.net");
+        $role->setCivilite("Monsieur");
+//        $id= $dao->getPdo()->lastInsertId();
+        $enr = $dao->getPdo()->query('SELECT MAX(IDPERSONNE) FROM PERSONNE;')->fetch();
+        $id= $enr[0];
+        $dao->update($id,$role);
+        $persLu = $dao->getOneByLogin('vhugo');
+        var_dump($persLu);
+ 
+        //Test de suppression
+        echo "<p>Test de suppression</p>";
+        $id = $persLu->getId();
+        echo "Supprimer : ".$id."<br/>";
+        $dao->delete($id);
+        $persLu = $dao->getOneById($id);
+        var_dump($persLu);
         
         $dao->deconnecter();
         ?>

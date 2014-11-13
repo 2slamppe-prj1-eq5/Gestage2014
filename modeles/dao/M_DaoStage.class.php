@@ -15,7 +15,7 @@ class M_DaoStage extends M_DaoGenerique {
      * @return objet :  instance de la classe métier, initialisée d'après les valeurs de l'enregistrement 
      */
     public function enregistrementVersObjet($enreg) {
-        //$retour = new M_DaoStage($enreg[]);
+    $retour = new M_Stage($enreg['NUM_STAGE'],$enreg['ANNEESCOL'], $enreg['IDETUDIANT'], $enreg['IDPROFESSEUR'], $enreg['IDORGANISATION'], $enreg['IDMAITRESTAGE'], $enreg['DATEDEBUT'], $enreg['DATEFIN'], $enreg['DATEVISITESTAGE'], $enreg['VILLE'], $enreg['DIVERS'], $enreg['BILANTRAVAUX'], $enreg['RESSOURCESOUTILS'], $enreg['COMMENTAIRES'], $enreg['PARTICIPATIONCCF']);
         return $retour;
     }
 
@@ -31,14 +31,14 @@ class M_DaoStage extends M_DaoGenerique {
             ':anneescol' => $objetMetier->getAnneeScol(),
             ':idetudiant' => $objetMetier->getIdEtudiant(),
             ':idprofesseur' => $objetMetier->getIdProfesseur(),
-            ':idorganisation' => $objetMetier->getOrganisation(),
+            ':idorganisation' => $objetMetier->getIdOrganisation(),
             ':idmaitrestage' => $objetMetier->getIdMaitreStage(),
             ':datedebut' => $objetMetier->getDateDebut(),
             ':datefin'  => $objetMetier->getDateFin(),
             ':datevisitestage' => $objetMetier->getDateVisiteStage(),
             ':ville' => $objetMetier->getVille(),
             ':divers' => $objetMetier->getDivers(),
-            ':bilantravaux' => $objetMetier->getBilantTravaux(),
+            ':bilantravaux' => $objetMetier->getBilanTravaux(),
             ':ressourceoutils' => $objetMetier->getRessourceOutils(),
             ':commentaires' => $objetMetier->getCommentaire(),
             ':participationccf'=> $objetMetier->getParticipationCCF()                
@@ -56,14 +56,14 @@ class M_DaoStage extends M_DaoGenerique {
                     
             $sql .=  "VALUES (:anneescol,:idetudiant, :idprofesseur, :idorganisation,
                      :idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers, :ressourceoutils, :commentaires, :participationccf)";
-            
-            //var_dump($sql);
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier
             $parametres = $this->objetVersEnregistrement($objetMetier);
+            //var_dump($sql);
+            //var_dump($parametres);
             // exécuter la requête avec les valeurs des paramètres dans un tableau
-            $retour = $queryPrepare->execute($parametres);
+            l$retour = $queryPrepare->execute($parametres);
 //            debug_query($sql, $parametres);
         } catch (PDOException $e) {
             echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();

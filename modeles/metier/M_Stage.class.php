@@ -17,11 +17,11 @@ class M_Stage {
     private $ville;
     private $divers;
     private $bilan;
-    private $ressouce;
+    private $ressource;
     private $commantaire;
     private $participationCCF;
 
-    function __construct($num, $annee, $etudiant, $prof, $organisation, $maitre, $dateD, $dateF, $dateV, $ville, $divers, $bilan, $ressouce, $commantaire, $participationCCF) {
+    function __construct($num, $annee, $etudiant, $prof, $organisation, $maitre, $dateD, $dateF, $dateV, $ville, $divers, $bilan, $ressource, $commantaire, $participationCCF) {
         $this->num = $num;
         $this->annee = $annee;
         $this->etudiant = $etudiant;
@@ -34,7 +34,7 @@ class M_Stage {
         $this->ville = $ville;
         $this->divers = $divers;
         $this->bilan = $bilan;
-        $this->ressouce = $ressouce;
+        $this->ressource = $ressource;
         $this->commantaire = $commantaire;
         $this->participationCCF = $participationCCF;
     }
@@ -51,7 +51,7 @@ class M_Stage {
         return $this->etudiant;
     }
 
-    public function getIdProf() {
+    public function getIdProfesseur() {
         return $this->prof;
     }
     
@@ -87,11 +87,11 @@ class M_Stage {
         return $this->bilan;
     }
 
-    public function getRessouceOutils() {
-        return $this->ressouce;
+    public function getRessourceOutils() {
+        return $this->ressource;
     }
 
-    public function getCommantaire() {
+    public function getCommentaire() {
         return $this->commantaire;
     }
 
@@ -147,8 +147,8 @@ class M_Stage {
         $this->bilan = $bilan;
     }
 
-    public function setRessouce($ressouce) {
-        $this->ressouce = $ressouce;
+    public function setRessouce($ressource) {
+        $this->ressource = $ressource;
     }
 
     public function setCommantaire($commantaire) {
