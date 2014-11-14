@@ -15,10 +15,37 @@ class M_DaoStage extends M_DaoGenerique {
      * @return objet :  instance de la classe métier, initialisée d'après les valeurs de l'enregistrement 
      */
     public function enregistrementVersObjet($enreg) {
+        // on instancie l'objet organisation s'il y a lieu
+        $l_Orga = null;
+        if (isset($unEnregistrement['IDORGANISATION'])) {
+            $daoOrganisation = new M_DaoOrganisation();
+            $daoOrganisation->setPdo($this->pdo);
+            $l_Orga = $daoOrganisation->getOneById($enreg['ID_ORGANISATION']);
+        }
         
+        // on instancie l'objet anneescol
+        $anneeScol = null;
+        if (isset($unEnregistrement['ANNEESCOL'])) {
+            $daoAnneeScol = new M_DaoAnneeScol();
+            $daoAnneeScol->setPdo($this->pdo);
+            $anneeScol = $daoAnneeScol->getOneById($enreg['ANNEESCOL']);
+        }
+        
+        $idEtudiant = null;
+        $idProf =null;
+        $idMaitreStage=null;
+        if (isset($unEnregistrement['IDETUDIANT']) && isset($unEnregistrement['IDPROFESSEUR']) && isset($unEnregistrement['IDMAITRESTAGE'])){
+            $daoPersonne = new M_DaoPersonne();
+            $daoPersonne->setPdo($this->pdo);
+            $idEtudiant = $daoPersonne->getOneByRole(4);
+            $idProf = $daoPersonne->getOneByRole(3);
+            $idMaitreStage = $daoPersonne->getOneByRole(5);
+        }
+        
+        // on construit l'objet Stage 
         $retour = new M_Stage(
-                $enreg['NUM_STAGE'],$enreg['ANNEESCOL'], $enreg['IDETUDIANT'], $enreg['IDPROFESSEUR'], 
-                $enreg['IDORGANISATION'], $enreg['IDMAITRESTAGE'], $enreg['DATEDEBUT'], $enreg['DATEFIN'], 
+                $enreg['NUM_STAGE'],$anneeScol, $idEtudiant, $idProf, 
+                $l_Orga, $idMaitreStage, $enreg['DATEDEBUT'], $enreg['DATEFIN'], 
                 $enreg['DATEVISITESTAGE'], $enreg['VILLE'], $enreg['DIVERS'], $enreg['BILANTRAVAUX'], 
                 $enreg['RESSOURCESOUTILS'], $enreg['COMMENTAIRES'], $enreg['PARTICIPATIONCCF']);
         return $retour;
@@ -63,10 +90,9 @@ class M_DaoStage extends M_DaoGenerique {
             $sql  = "INSERT INTO $this->nomTable (ANNEESCOL,IDETUDIANT,IDPROFESSEUR,IDORGANISATION,";
             $sql .= "IDMAITRESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANTRAVAUX,";
             $sql .= "RESSOURCESOUTILS, COMMENTAIRES,PARTICIPATIONCCF) ";
-            $sql .= "VALUES (:anneescol,:idetudiant, :idprofesseur, :idorganisation,";
+            $sql .= "VALUES ('2013-2014','25', '3', '1',";
             $sql .= ":idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers,";
             $sql .= ":bilantravaux :ressourceoutils, :commentaires, :participationccf)";
-            //var_dump($sql);
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier

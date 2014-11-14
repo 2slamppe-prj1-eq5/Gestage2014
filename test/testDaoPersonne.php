@@ -36,9 +36,10 @@
         //Test d'insertion
         echo "<p>Test d'insertion</p>";
         $role = new M_Role(2, 2, "intendant");
-        $role= new M_Personne(0, null, $role, "M.", "Hugo", "Victor", "0278901234", "vhugo@free.fr", "0678901234", "", "", "vhugo", "vh");
-        var_dump($role);
-        $dao->insert($role);
+        $spe = new M_Specialite(null, null, null);
+        $perso= new M_Personne(0, $spe, $role, "M.", "Hugo", "Victor", "0278901234", "vhugo@free.fr", "0678901234", "", "", "vhugo", "vh");
+        var_dump($perso);
+        $dao->insert($perso);
         $persLu = $dao->getOneByLogin('vhugo');
         var_dump($persLu);
 
