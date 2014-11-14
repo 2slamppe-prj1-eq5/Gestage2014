@@ -27,16 +27,14 @@
         $prof = new M_Personne(252, null, $roleP, "M.", "AA", "AAA", "0202020202", "a@free.fr", null, null, null, "aa", "aa");
 
         $roleM = new M_Role(150, 5, "maître de stage");
-        $maitre = new M_Personne($id, $specialite, $roleM, $civilite, $nom, $prenom, $numTel, $mail, $mobile, $etudes, $formation, $login, $mdp);
+        $maitre = new M_Personne(322, null, $roleM, "M.", "BB", "BBB", "0202020202", "b@gmail.com", null, null, null, "bb", "bb");
 
-        $org = new M_Organisation(3, "16", "nantes", "8 allée backo", "44000", "0202020202", null, "Sa", null);
+        $organisation = new M_Organisation(3, "16", "nantes", "8 allée backo", "44000", "0202020202", null, "Sa", null);
 
         $annee = new M_AnneeScol('2013-2015');
 
         $stage = new M_Stage(28, $annee, $etudiant, $prof, $organisation, $maitre, '2014-05-26', '2014-06-27', '2014-06-20', 'Nantes', 'divers', 'bilan', 'ressource', 'commantaire', 'Oui');
-        var_dump($Stage);
-        die();
-        $dao->insert($Stage);
+        $dao->insert($stage);
         $StageAjoute = $dao->getOneById(28);
         var_dump($StageAjoute);
         

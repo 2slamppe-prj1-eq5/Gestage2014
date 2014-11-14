@@ -15,7 +15,12 @@ class M_DaoStage extends M_DaoGenerique {
      * @return objet :  instance de la classe métier, initialisée d'après les valeurs de l'enregistrement 
      */
     public function enregistrementVersObjet($enreg) {
-    $retour = new M_Stage($enreg['NUM_STAGE'],$enreg['ANNEESCOL'], $enreg['IDETUDIANT'], $enreg['IDPROFESSEUR'], $enreg['IDORGANISATION'], $enreg['IDMAITRESTAGE'], $enreg['DATEDEBUT'], $enreg['DATEFIN'], $enreg['DATEVISITESTAGE'], $enreg['VILLE'], $enreg['DIVERS'], $enreg['BILANTRAVAUX'], $enreg['RESSOURCESOUTILS'], $enreg['COMMENTAIRES'], $enreg['PARTICIPATIONCCF']);
+        
+        $retour = new M_Stage(
+                $enreg['NUM_STAGE'],$enreg['ANNEESCOL'], $enreg['IDETUDIANT'], $enreg['IDPROFESSEUR'], 
+                $enreg['IDORGANISATION'], $enreg['IDMAITRESTAGE'], $enreg['DATEDEBUT'], $enreg['DATEFIN'], 
+                $enreg['DATEVISITESTAGE'], $enreg['VILLE'], $enreg['DIVERS'], $enreg['BILANTRAVAUX'], 
+                $enreg['RESSOURCESOUTILS'], $enreg['COMMENTAIRES'], $enreg['PARTICIPATIONCCF']);
         return $retour;
     }
 
@@ -27,17 +32,17 @@ class M_DaoStage extends M_DaoGenerique {
     public function objetVersEnregistrement($objetMetier) {
         // construire un tableau des paramètres d'insertion ou de modification
         // l'ordre des valeurs est important : il correspond à celui des paramètres de la requête SQL
-        if (!is_null($objetMetier->getIdEtudiant())) {
-            $idEtudiant = $objetMetier->getRole()->getId();
-        } else {
-            $idRole = 0; // "Autre" (simple visiteur)
-        }
+        $anneeScol = $objetMetier->getAnneeScol()->getAnneeScol();
+        $idEtudiant = $objetMetier->getIdEtudiant()->getId();
+        $idProfesseur = $objetMetier->getIdProfesseur()->getId();
+        $idOrganisation = $objetMetier->getIdOrganisation()->getIdOrganisation();
+        $idMaitreStage = $objetMetier->getIdMaitreStage()->getId();
         $retour = array(
-            ':anneescol' => $objetMetier->getAnneeScol(),
-            ':idetudiant' => $objetMetier,
-            ':idprofesseur' => $objetMetier->getIdProfesseur(),
-            ':idorganisation' => $objetMetier->getIdOrganisation(),
-            ':idmaitrestage' => $objetMetier->getIdMaitreStage(),
+            ':anneescol' => $anneeScol,
+            ':idetudiant' => $idEtudiant,
+            ':idprofesseur' => $idProfesseur,
+            ':idorganisation' => $idOrganisation,
+            ':idmaitrestage' => $idMaitreStage,
             ':datedebut' => $objetMetier->getDateDebut(),
             ':datefin'  => $objetMetier->getDateFin(),
             ':datevisitestage' => $objetMetier->getDateVisiteStage(),
@@ -55,17 +60,17 @@ class M_DaoStage extends M_DaoGenerique {
         $retour = FALSE;
         try {
             // Requête textuelle paramétrée (paramètres nommés)
-            $sql = "INSERT INTO $this->nomTable (ANNEESCOL,IDETUDIANT,IDPROFESSEUR,IDORGANISATION,
-                                                 IDMAITRESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANTRAVAUX,RESSOURCESOUTILS,
-                                                 COMMENTAIRES,PARTICIPATIONCCF) ";
-                    
-            $sql .=  "VALUES (:anneescol,:idetudiant, :idprofesseur, :idorganisation,
-                     :idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers, :bilantravaux :ressourceoutils, :commentaires, :participationccf)";
+            $sql  = "INSERT INTO $this->nomTable (ANNEESCOL,IDETUDIANT,IDPROFESSEUR,IDORGANISATION,";
+            $sql .= "IDMAITRESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANTRAVAUX,";
+            $sql .= "RESSOURCESOUTILS, COMMENTAIRES,PARTICIPATIONCCF) ";
+            $sql .= "VALUES (:anneescol,:idetudiant, :idprofesseur, :idorganisation,";
+            $sql .= ":idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers,";
+            $sql .= ":bilantravaux :ressourceoutils, :commentaires, :participationccf)";
+            //var_dump($sql);
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier
             $parametres = $this->objetVersEnregistrement($objetMetier);
-            var_dump($sql);
             //var_dump($parametres);
             // exécuter la requête avec les valeurs des paramètres dans un tableau
             $retour = $queryPrepare->execute($parametres);
