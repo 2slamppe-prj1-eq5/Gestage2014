@@ -116,7 +116,11 @@ class C_Utilisateur extends C_ControleurGenerique {
         //récupération des données
         $Annee = $_POST['annee'];
         $Organisation = $_POST['orga'];
-        $ville = $_POST['ville'];
+        if($_POST['ville']==="insertVille"){
+            $ville = $_POST['ajoutVille'];
+        }else{
+            $ville = $_POST['ville'];
+        }
         $dateD = $_POST['dateD'];
         $dateF = $_POST['dateF'];
         $dateV = $_POST['dateV'];
@@ -137,14 +141,116 @@ class C_Utilisateur extends C_ControleurGenerique {
         // récupération des objets élèves, professeurs et maîtres de stages pour l'insertion d'un stage
         $daoPers = new M_DaoPersonne();
         $daoPers->connecter();
-                
-        $etudiant = $daoPers->getOneByNomPrenom($EleveNom, $ElevePrenom);
+        
+        $verif = new M_Personne(null, null, null, null, null, null, null, null,
+                null, null, null, null, null);
+        $ajout = 0;
+        
+        if($daoPers->getOneByNomPrenom($EleveNom, $ElevePrenom) != $verif){
+            $etudiant = $daoPers->getOneByNomPrenom($EleveNom, $ElevePrenom);
+        }else{
+            $ajout = 1;
+            //récupération du role Etudiant
+            $daoRole = new M_DaoRole();
+            $daoRole->connecter();
+            $role = $daoRole->getOneById(4);
+            $daoRole->deconnecter();
+            
+            //récupération de la spécialite
+            $specialite = new M_Specialite(null, null, null);
+            
+            //mise en forme du mail
+            $mail = $ElevePrenom[0];
+            $mail .= $EleveNom;
+            $mail .= "@la-joliverie.com";
+            $mail = mb_strtolower($mail);
+            
+            //mise en forme de login et mdp
+            $login = $ElevePrenom[0];
+            $login .= $EleveNom;
+            $login = mb_strtolower($login);
+            
+            $mdp = sha1($login);
+            
+            $etudiant = new M_Personne(0, $specialite, $role, "Monsieur", $EleveNom, $ElevePrenom, "0000000000", $mail, "", "", "", $login, $mdp);
+            
+            $daoPers->insert($etudiant);
+            if($daoPers){
+                $etudiant = $daoPers->getOneByNomPrenom($EleveNom, $ElevePrenom);
+            }
+        }
         //echo "étudiant";
         //var_dump($etudiant);
-        $professeur = $daoPers->getOneByNomPrenom($ProfNom, $ProfPrenom);
+
+        if($daoPers->getOneByNomPrenom($ProfNom, $ProfPrenom) != $verif){
+           $professeur = $daoPers->getOneByNomPrenom($ProfNom, $ProfPrenom);
+        }else{
+            $ajout = 1;
+            //récupération du role Etudiant
+            $daoRole = new M_DaoRole();
+            $daoRole->connecter();
+            $role = $daoRole->getOneById(3);
+            $daoRole->deconnecter();
+            
+            //récupération de la spécialite
+            $specialite = new M_Specialite(null, null, null);
+            
+            //mise en forme du mail
+            $mail = $ProfPrenom[0];
+            $mail .= $ProfNom;
+            $mail .= "@la-joliverie.com";
+            $mail = mb_strtolower($mail);
+            
+            //mise en forme de login et mdp
+            $login = $ProfPrenom[0];
+            $login .= $ProfNom;
+            $login = mb_strtolower($login);
+            
+            $mdp = sha1($login);
+            
+            $professeur = new M_Personne(0, $specialite, $role, "Monsieur", $ProfNom, $ProfPrenom, "0000000000", $mail, "", "", "", $login, $mdp);
+            
+            $daoPers->insert($professeur);
+            if($daoPers){
+                $professeur = $daoPers->getOneByNomPrenom($ProfNom, $ProfPrenom);
+            }
+        }
         //echo "professeur";
         //var_dump($professeur);
-        $maitreStage = $daoPers->getOneByNomPrenom($MasterStageNom, $MasterStagePrenom);
+        
+        if($daoPers->getOneByNomPrenom($MasterStageNom, $MasterStagePrenom) != $verif){
+           $maitreStage = $daoPers->getOneByNomPrenom($MasterStageNom, $MasterStagePrenom);
+        }else{
+            $ajout = 1;
+            //récupération du role Etudiant
+            $daoRole = new M_DaoRole();
+            $daoRole->connecter();
+            $role = $daoRole->getOneById(5);
+            $daoRole->deconnecter();
+            
+            //récupération de la spécialite
+            $specialite = new M_Specialite(null, null, null);
+            
+            //mise en forme du mail
+            $mail = $MasterStagePrenom[0];
+            $mail .= $MasterStageNom;
+            $mail .= "@la-joliverie.com";
+            $mail = mb_strtolower($mail);
+            
+            //mise en forme de login et mdp
+            $login = $MasterStagePrenom[0];
+            $login .= $MasterStageNom;
+            $login = mb_strtolower($login);
+            
+            $mdp = sha1($login);
+            
+            $maitreStage = new M_Personne(0, $specialite, $role, "Monsieur", $MasterStageNom, $MasterStagePrenom, "0000000000", $mail, "", "", "", $login, $mdp);
+            
+            $daoPers->insert($maitreStage);
+            if($daoPers){
+                $maitreStage = $daoPers->getOneByNomPrenom($MasterStageNom, $MasterStagePrenom);
+            }
+        }
         //echo "maitre de stage";
         //var_dump($maitreStage);
         
@@ -154,7 +260,17 @@ class C_Utilisateur extends C_ControleurGenerique {
         $daoAnnee = new M_DaoAnneeScol();
         $daoAnnee->connecter();
         
-        $annee = $daoAnnee->getOneByAnnee($Annee);
+        if($_POST['annee']==="insertAnnee"){
+            $AnneeScol = $_POST['ajoutAnnee'];
+            if(!$daoAnnee->getOneByAnnee($_POST['ajoutAnnee'])){
+                $anneeScol = new M_AnneeScol($_POST['ajoutAnnee']);
+                $daoAnnee->insert($anneeScol);
+            }
+        }else{
+            $AnneeScol = $_POST['annee'];
+        }
+        
+        $annee = $daoAnnee->getOneByAnnee($AnneeScol);
         //echo "année scolaire";
         //var_dump($annee);
         
@@ -169,6 +285,9 @@ class C_Utilisateur extends C_ControleurGenerique {
         //echo "organisation";
         //var_dump($organisation);
         
+        $daoOrga->deconnecter();
+        
+        
         //création d'un stage
         $unStage = new M_Stage(0, $annee, $etudiant, $professeur, $organisation, $maitreStage, $dateD, $dateF, $dateV, $ville, $divers, $bilanTravaux, $ressourcesOutils, $commantaire, $participationCCF);
         //echo "Le Stage";
@@ -182,10 +301,30 @@ class C_Utilisateur extends C_ControleurGenerique {
 
         //si l'insertion a réussis, revois sur la page d'affichage sinon, renvoi un message d'erreur
         if ($daoStage) {
-            $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.php");
+            $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationStage.php");
         }
+        $daoStage->deconnecter();
         
-        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationStage.php");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationStage.inc.php");
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+        $this->vue->afficher();
+        
+        //envoie d'un mail à l'administrateur pour spécifier l'ajout d'une personne
+        if($ajout === 1){
+            // Le message
+            $message  = "Madame ou Monsieur l'administrateur, \n";
+            $message .= "Une ou plusieurs personne ont été créer veuillez les mettres a jour.";
+
+            // Envoi du mail
+            //mail('admin-gestage@la-joliverie.com', 'Ajout de personne', $message);
+            mail('alexandre.urbain@neuf.fr', 'Ajout de personne', $message);
+        }
+    }
+    
+    function creerEntreprise(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Validation de la création d'une personne");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreCreerEntreprise.inc.php");
         $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
         $this->vue->afficher();
     }

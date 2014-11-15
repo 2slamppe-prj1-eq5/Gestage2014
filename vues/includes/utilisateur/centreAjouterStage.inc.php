@@ -201,6 +201,7 @@ if (isset($this->message)) {
     function ajoutOrga() {
         if(document.getElementById("orga").value === "insertOrga"){
             alert("Vous allez être redirigé vers la page de création d'un organisation");
+            document.location.href=".?controleur=utilisateur&action=creerEntreprise" 
         }
     }
     

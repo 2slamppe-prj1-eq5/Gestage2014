@@ -1,14 +1,22 @@
 <?php
     // récupération de tous les champs saisies
-    $AnneeScol = $_POST['annee'];
+    if($_POST['annee']==="insertAnnee"){
+        $AnneeScol = $_POST['ajoutAnnee'];
+    }else{
+        $AnneeScol = $_POST['annee'];
+    }
     
     $Organisation = $_POST['orga'];
     $daoOrganisation = new M_DaoOrganisation();
     $daoOrganisation->connecter();
-    $Lorganisation = $daoOrganisation->getOneById($Organisation);;
+    $Lorganisation = $daoOrganisation->getOneById($Organisation);
     $daoOrganisation->deconnecter();
     
-    $Ville = $_POST['ville'];
+    if($_POST['ville']==="insertVille"){
+        $Ville = $_POST['ajoutVille'];
+    }else{
+        $Ville = $_POST['ville'];
+    }
     $DateDebut = $_POST['dateD'];
     $DateFin = $_POST['dateF'];
     $DateVisite = $_POST['dateV'];

@@ -112,7 +112,7 @@ class C_AdminPersonnes extends C_ControleurGenerique {
 
             //si l'insertion a réussis, revois sur la page d'affichage sinon, renvoi un message d'erreur
             if ($daoPers) {
-                $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.php");
+                $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.inc.php");
             }
 
             $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
