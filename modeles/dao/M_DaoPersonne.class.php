@@ -173,6 +173,30 @@ class M_DaoPersonne extends M_DaoGenerique {
         return $retour;
     }
     
+    function getOneByNomPrenom($nom, $prenom) {
+        $retour = null;
+        try {
+            // Requête textuelle
+            $sql = "SELECT * FROM $this->nomTable P ";
+            $sql .= "LEFT OUTER JOIN SPECIALITE S ON S.IDSPECIALITE = P.IDSPECIALITE ";
+            $sql .= "LEFT OUTER JOIN ROLE R ON R.IDROLE = P.IDROLE ";
+            $sql .= "WHERE NOM = :nom AND PRENOM = :prenom";
+            // préparer la requête PDO
+            $queryPrepare = $this->pdo->prepare($sql);
+            // exécuter la requête avec les valeurs des paramètres (il n'y en a qu'un ici) dans un tableau
+            if ($queryPrepare->execute(array(':nom' => $nom, ':prenom' => $prenom))) {
+                // si la requête réussit :
+                // extraire l'enregistrement retourné par la requête
+                $enregistrement = $queryPrepare->fetch(PDO::FETCH_ASSOC);
+                // construire l'objet métier correspondant
+                $retour = $this->enregistrementVersObjet($enregistrement);
+            }
+        } catch (PDOException $e) {
+            echo get_class($this) . ' - ' . __METHOD__ . ' : ' . $e->getMessage();
+        }
+        return $retour;
+    }
+    
     /**
      * verifierLogin
      * @param string $login

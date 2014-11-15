@@ -17,15 +17,15 @@ class M_DaoStage extends M_DaoGenerique {
     public function enregistrementVersObjet($enreg) {
         // on instancie l'objet organisation s'il y a lieu
         $l_Orga = null;
-        if (isset($unEnregistrement['IDORGANISATION'])) {
+        if (isset($enreg['IDORGANISATION'])) {
             $daoOrganisation = new M_DaoOrganisation();
             $daoOrganisation->setPdo($this->pdo);
-            $l_Orga = $daoOrganisation->getOneById($enreg['ID_ORGANISATION']);
+            $l_Orga = $daoOrganisation->getOneById($enreg['IDORGANISATION']);
         }
         
         // on instancie l'objet anneescol
         $anneeScol = null;
-        if (isset($unEnregistrement['ANNEESCOL'])) {
+        if (isset($enreg['ANNEESCOL'])) {
             $daoAnneeScol = new M_DaoAnneeScol();
             $daoAnneeScol->setPdo($this->pdo);
             $anneeScol = $daoAnneeScol->getOneById($enreg['ANNEESCOL']);
@@ -34,12 +34,12 @@ class M_DaoStage extends M_DaoGenerique {
         $idEtudiant = null;
         $idProf =null;
         $idMaitreStage=null;
-        if (isset($unEnregistrement['IDETUDIANT']) && isset($unEnregistrement['IDPROFESSEUR']) && isset($unEnregistrement['IDMAITRESTAGE'])){
+        if (isset($enreg['IDETUDIANT']) && isset($enreg['IDPROFESSEUR']) && isset($enreg['IDMAITRESTAGE'])){
             $daoPersonne = new M_DaoPersonne();
             $daoPersonne->setPdo($this->pdo);
-            $idEtudiant = $daoPersonne->getOneByRole(4);
-            $idProf = $daoPersonne->getOneByRole(3);
-            $idMaitreStage = $daoPersonne->getOneByRole(5);
+            $idEtudiant = $daoPersonne->getOneById($enreg['IDETUDIANT']);
+            $idProf = $daoPersonne->getOneById($enreg['IDPROFESSEUR']);
+            $idMaitreStage = $daoPersonne->getOneById($enreg['IDMAITRESTAGE']);
         }
         
         // on construit l'objet Stage 
@@ -60,10 +60,10 @@ class M_DaoStage extends M_DaoGenerique {
         // construire un tableau des paramètres d'insertion ou de modification
         // l'ordre des valeurs est important : il correspond à celui des paramètres de la requête SQL
         $anneeScol = $objetMetier->getAnneeScol()->getAnneeScol();
-        $idEtudiant = $objetMetier->getIdEtudiant()->getId();
-        $idProfesseur = $objetMetier->getIdProfesseur()->getId();
-        $idOrganisation = $objetMetier->getIdOrganisation()->getIdOrganisation();
-        $idMaitreStage = $objetMetier->getIdMaitreStage()->getId();
+        $idEtudiant = $objetMetier->getEtudiant()->getId();
+        $idProfesseur = $objetMetier->getProfesseur()->getId();
+        $idOrganisation = $objetMetier->getOrganisation()->getIdOrganisation();
+        $idMaitreStage = $objetMetier->getMaitreStage()->getId();
         $retour = array(
             ':anneescol' => $anneeScol,
             ':idetudiant' => $idEtudiant,
@@ -90,9 +90,10 @@ class M_DaoStage extends M_DaoGenerique {
             $sql  = "INSERT INTO $this->nomTable (ANNEESCOL,IDETUDIANT,IDPROFESSEUR,IDORGANISATION,";
             $sql .= "IDMAITRESTAGE,DATEDEBUT,DATEFIN,DATEVISITESTAGE,VILLE,DIVERS,BILANTRAVAUX,";
             $sql .= "RESSOURCESOUTILS, COMMENTAIRES,PARTICIPATIONCCF) ";
-            $sql .= "VALUES ('2013-2014','25', '3', '1',";
+            $sql .= "VALUES (:anneescol, :idetudiant, :idprofesseur, :idorganisation,";
             $sql .= ":idmaitrestage, :datedebut, :datefin, :datevisitestage, :ville, :divers,";
-            $sql .= ":bilantravaux :ressourceoutils, :commentaires, :participationccf)";
+            $sql .= ":bilantravaux, :ressourceoutils, :commentaires, :participationccf)";
+            
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);
             // préparer la  liste des paramètres, avec l'identifiant en dernier
@@ -118,7 +119,15 @@ class M_DaoStage extends M_DaoGenerique {
     function getAll() {
         $retour = null;
         // Requête textuelle
-        $sql = "SELECT * FROM $this->nomTable";
+        $sql = "SELECT * FROM $this->nomTable S ";
+        $sql .= "LEFT OUTER JOIN PERSONNE P ON P.IDPERSONNE = S.IDETUDIANT ";
+        $sql .= "LEFT OUTER JOIN PERSONNE P2 ON P2.IDPERSONNE = S.IDPROFESSEUR ";
+        $sql .= "LEFT OUTER JOIN PERSONNE P3 ON P3.IDPERSONNE = S.IDMAITRESTAGE ";
+        $sql .= "LEFT OUTER JOIN ORGANISATION O ON O.IDORGANISATION = S.IDORGANISATION ";
+        
+        //var_dump($sql);
+        //die();
+        
         try {
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);

@@ -114,12 +114,12 @@ class C_Utilisateur extends C_ControleurGenerique {
         $this->vue->ecrireDonnee('titreVue', "Validation de la création d'une personne");
 
         //récupération des données
-        /*$Annee = $_POST['annee'];
+        $Annee = $_POST['annee'];
         $Organisation = $_POST['orga'];
-        $Ville = $_POST['ville'];
-        $DateDebut = $_POST['dateD'];
-        $DateFin = $_POST['dateF'];
-        $DateVisite = $_POST['dateV'];
+        $ville = $_POST['ville'];
+        $dateD = $_POST['dateD'];
+        $dateF = $_POST['dateF'];
+        $dateV = $_POST['dateV'];
         
         $EleveNom = $_POST['eleveNom'];
         $ElevePrenom = $_POST['elevePrenom'];
@@ -128,26 +128,63 @@ class C_Utilisateur extends C_ControleurGenerique {
         $MasterStageNom = $_POST['stageNom'];
         $MasterStagePrenom = $_POST['stagePrenom'];
         
-        $Divers = $_POST['divers'];
-        $BilanTravaux = $_POST['bilanTravaux'];
-        $RessourcesOutils = $_POST['RessourcesOutils'];
-        $Commantaire = $_POST['Commantaire'];
-        $ParticipationCCF = $_POST['ParticipationCCF'];*/
-
-        /*//création d'un stage
-        $unePersonne = new M_Personne(null, $specialite, $role, $civilite, $nom, $prenom, $numTel, $mail, $mobile, $etudes, $formation, $login, $mdp);
-
+        $divers = $_POST['divers'];
+        $bilanTravaux = $_POST['bilanTravaux'];
+        $ressourcesOutils = $_POST['RessourcesOutils'];
+        $commantaire = $_POST['Commantaire'];
+        $participationCCF = $_POST['ParticipationCCF'];
         
-        //insertion de la personne crée dans la base de données
+        // récupération des objets élèves, professeurs et maîtres de stages pour l'insertion d'un stage
         $daoPers = new M_DaoPersonne();
         $daoPers->connecter();
-        $pdo = $daoPers->getPdo();
-        $daoPers->insert($unePersonne);
+                
+        $etudiant = $daoPers->getOneByNomPrenom($EleveNom, $ElevePrenom);
+        //echo "étudiant";
+        //var_dump($etudiant);
+        $professeur = $daoPers->getOneByNomPrenom($ProfNom, $ProfPrenom);
+        //echo "professeur";
+        //var_dump($professeur);
+        $maitreStage = $daoPers->getOneByNomPrenom($MasterStageNom, $MasterStagePrenom);
+        //echo "maitre de stage";
+        //var_dump($maitreStage);
+        
+        $daoPers->deconnecter();
+        
+        // récupération de l'objet AnneeScol pour l'insertion d'un stage
+        $daoAnnee = new M_DaoAnneeScol();
+        $daoAnnee->connecter();
+        
+        $annee = $daoAnnee->getOneByAnnee($Annee);
+        //echo "année scolaire";
+        //var_dump($annee);
+        
+        $daoAnnee->deconnecter();
+        
+        
+        //récupération de l'objet Organisation pour l'insertion d'un stage
+        $daoOrga = new M_DaoOrganisation();
+        $daoOrga->connecter();
+        
+        $organisation = $daoOrga->getOneById($Organisation);
+        //echo "organisation";
+        //var_dump($organisation);
+        
+        //création d'un stage
+        $unStage = new M_Stage(0, $annee, $etudiant, $professeur, $organisation, $maitreStage, $dateD, $dateF, $dateV, $ville, $divers, $bilanTravaux, $ressourcesOutils, $commantaire, $participationCCF);
+        //echo "Le Stage";
+        //var_dump($unStage);
+        
+        
+        //insertion de la personne crée dans la base de données
+        $daoStage = new M_DaoStage();
+        $daoStage->connecter();
+        $daoStage->insert($unStage);
 
         //si l'insertion a réussis, revois sur la page d'affichage sinon, renvoi un message d'erreur
-        if ($daoPers) {
+        if ($daoStage) {
             $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationPersonne.php");
-        }*/
+        }
+        
         $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreValiderCreationStage.php");
         $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
         $this->vue->afficher();

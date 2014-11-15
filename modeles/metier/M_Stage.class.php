@@ -47,19 +47,19 @@ class M_Stage {
         return $this->annee;
     }
 
-    public function getIdEtudiant() {
+    public function getEtudiant() {
         return $this->etudiant;
     }
 
-    public function getIdProfesseur() {
+    public function getProfesseur() {
         return $this->prof;
     }
     
-    public function getIdOrganisation() {
+    public function getOrganisation() {
         return $this->organisation;
     }
     
-    public function getIdMaitreStage() {
+    public function getMaitreStage() {
         return $this->maitre;
     }
 
