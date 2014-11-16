@@ -124,5 +124,13 @@ class C_AdminPersonnes extends C_ControleurGenerique {
         }
         
     }
+    
+    function afficherEleve(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Affichage d'une entreprise");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreAfficherEntreprise.inc.php");
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+        $this->vue->afficher(); 
+    }
 
 }

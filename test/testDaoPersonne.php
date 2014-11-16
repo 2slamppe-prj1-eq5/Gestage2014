@@ -45,9 +45,8 @@
         
         //Test de modification
         echo "<p>Test de modification</p>";
-       $role->setMail("victor.hugo@laposte.net");
+        $role->setMail("victor.hugo@laposte.net");
         $role->setCivilite("Monsieur");
-//        $id= $dao->getPdo()->lastInsertId();
         $enr = $dao->getPdo()->query('SELECT MAX(IDPERSONNE) FROM PERSONNE;')->fetch();
         $id= $enr[0];
         $dao->update($id,$role);

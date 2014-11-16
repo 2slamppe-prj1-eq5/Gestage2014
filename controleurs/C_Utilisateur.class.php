@@ -70,6 +70,9 @@ class C_Utilisateur extends C_ControleurGenerique {
         } else {
             $this->vue->ecrireDonnee('message',"Echec des modifications");
         }
+        // transmettre le login        
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get('login'));
+        
         $this->vue->afficher();
     }
     
@@ -323,12 +326,34 @@ class C_Utilisateur extends C_ControleurGenerique {
     
     function creerEntreprise(){
         $this->vue = new V_Vue("../vues/templates/template.inc.php");
-        $this->vue->ecrireDonnee('titreVue', "Validation de la création d'une personne");
+        $this->vue->ecrireDonnee('titreVue', "Validation de la création d'une entreprise");
         $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreCreerEntreprise.inc.php");
         $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
         $this->vue->afficher();
     }
-
+    
+    function afficherEntreprise(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Affichage d'une entreprise");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreAfficherEntreprise.inc.php");
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+        $this->vue->afficher();
+    }
+    
+    function MajEntreprise(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Affichage d'une entreprise");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreAfficherEntreprise.inc.php");
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+        $this->vue->afficher();
+    }
+    function afficheListeStage(){
+        $this->vue = new V_Vue("../vues/templates/template.inc.php");
+        $this->vue->ecrireDonnee('titreVue', "Affichage d'une entreprise");
+        $this->vue->ecrireDonnee('centre', "../vues/includes/utilisateur/centreAfficherEntreprise.inc.php");
+        $this->vue->ecrireDonnee('loginAuthentification', MaSession::get("login"));
+        $this->vue->afficher();        
+    }
 }
 
 ?>

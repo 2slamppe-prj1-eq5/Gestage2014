@@ -252,8 +252,9 @@ class M_DaoPersonne extends M_DaoGenerique {
         try {
             // Requête textuelle paramétrée (paramètres nommés)
             $sql = "UPDATE $this->nomTable SET ";
-            $sql .= "IDROLE = :idRole , ";
+            $sql .= "IDSPECIALITE = :specialite , ";
             $sql .= "CIVILITE = :civilite , ";
+            $sql .= "IDROLE = :idRole , ";
             $sql .= "NOM = :nom , ";
             $sql .= "PRENOM = :prenom , ";
             $sql .= "NUM_TEL = :numTel , ";
@@ -263,7 +264,7 @@ class M_DaoPersonne extends M_DaoGenerique {
             $sql .= "FORMATION = :formation , ";
             $sql .= "LOGINUTILISATEUR = :login , ";
             $sql .= "MDPUTILISATEUR = :mdp ";
-            $sql .= "WHERE IDPERSONNE = :id";
+            $sql .= "WHERE IDPERSONNE = :id";            
 //            var_dump($sql);
             // préparer la requête PDO
             $queryPrepare = $this->pdo->prepare($sql);

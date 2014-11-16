@@ -21,12 +21,18 @@
         <input type="hidden" readonly="readonly" name="id" id="id"></input>
         <label for="role">R&ocirc;le :</label>
         <select OnChange="javascript:choixRole();"  name="role" id="role"><!-- le OnChange éxécute la fonction qui affichera ou non le formulaire etudiant -->
-            <option value=""></option>
+            <?php 
+                if($_GET['role']=="MaitreStage"){
+                    echo'<option value="5">MaitreDeStage</option>';
+                }else{
+            ?>
+                    <option value=""></option>
             <?php
-            // remplissage du "SELECT" qui contien les roles
-            foreach ($this->lireDonnee('lesRoles') as $role) {
-                echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
-            }
+                    // remplissage du "SELECT" qui contien les roles
+                    foreach ($this->lireDonnee('lesRoles') as $role) {
+                        echo'<option value="' . $role->getId() . '">' . $role->getLibelle() . '</option>';
+                    }
+                }
             ?>  
         </select>
 
